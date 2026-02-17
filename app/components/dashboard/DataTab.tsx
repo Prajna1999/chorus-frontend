@@ -38,8 +38,35 @@ export function DataTab({ contribs }: DataTabProps) {
         })}
       </div>
       {!filtered.length && (
-        <div className="text-center py-11 text-text-dim text-sm">
-          No contributions yet
+        <div style={{
+          textAlign: 'center',
+          padding: '80px 32px',
+          background: '#f9fafb',
+          border: `1px dashed #e5e7eb`,
+          borderRadius: 12,
+        }}>
+          <div style={{
+            width: 80,
+            height: 80,
+            margin: '0 auto 24px',
+            borderRadius: '50%',
+            background: '#f0fdf4',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div style={{ fontSize: 18, fontWeight: 600, color: '#18181b', marginBottom: 8 }}>
+            {filter === 'all' ? 'No contributions yet' : `No ${filter} contributions`}
+          </div>
+          <div style={{ fontSize: 14, color: '#71717a' }}>
+            {filter === 'all'
+              ? 'Start contributing to see your submissions here'
+              : `Switch to the Contribute tab to add ${filter} data`}
+          </div>
         </div>
       )}
       <div className="flex flex-col gap-1.5">

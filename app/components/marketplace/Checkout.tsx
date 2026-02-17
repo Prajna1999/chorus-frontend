@@ -7,6 +7,7 @@ import { Input } from '@/app/components/ui/Input';
 import { Label } from '@/app/components/ui/Label';
 import { Badge } from '@/app/components/ui/Badge';
 import { Divider } from '@/app/components/ui/Divider';
+import { T, SANS, MONO } from '@/lib/theme';
 import {
   ArrowLeftIcon,
   CheckIcon,
@@ -38,37 +39,62 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
   const total = tier.price + tax;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div style={{ minHeight: '100vh', background: T.bg }}>
       {/* Header */}
-      <nav className="px-7 py-4 flex justify-between items-center border-b border-border shadow-sm bg-surface">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-text-dim hover:text-text transition-colors">
-            <ArrowLeftIcon className="w-5 h-5" />
+      <nav style={{
+        padding: '16px 28px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: `1px solid ${T.border}`,
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        background: T.surface
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={onBack} style={{
+            color: T.textDim,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'color 0.15s',
+            padding: 0
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = T.text}
+          onMouseLeave={e => e.currentTarget.style.color = T.textDim}>
+            <ArrowLeftIcon style={{ width: 20, height: 20 }} />
           </button>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-success shadow-sm" />
-            <span className="text-sm font-bold font-mono tracking-wide">CHORUS</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }} />
+            <span style={{ fontSize: 14, fontWeight: 'bold', fontFamily: MONO, letterSpacing: '0.05em' }}>CHORUS</span>
           </div>
         </div>
         <Badge color="success">SECURE CHECKOUT</Badge>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 24 }}>
+          <style>{`
+            @media (min-width: 1024px) {
+              .checkout-grid {
+                grid-template-columns: 2fr 1fr;
+              }
+            }
+          `}</style>
+          <div className="checkout-grid" style={{ display: 'grid', gap: 24 }}>
           {/* Left - Checkout Form */}
-          <div className="lg:col-span-2 space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <div>
-              <h1 className="text-2xl font-bold text-text mb-2">Complete Purchase</h1>
-              <p className="text-sm text-text-mid">
+              <h1 style={{ fontSize: 24, fontWeight: 'bold', color: T.text, marginBottom: 8 }}>Complete Purchase</h1>
+              <p style={{ fontSize: 14, color: T.textMid }}>
                 Secure your license for {dataset.name}
               </p>
             </div>
 
             {/* Billing Info */}
             <Card>
-              <h3 className="text-sm font-bold text-text mb-3">Billing Information</h3>
-              <div className="space-y-3">
-                <div className="grid grid-cols-2 gap-3">
+              <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>Billing Information</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                   <div>
                     <Label>Company Name *</Label>
                     <Input placeholder="Acme AI Labs" />
@@ -86,8 +112,8 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
 
                 <div>
                   <Label>Billing Address *</Label>
-                  <Input placeholder="Street address" className="mb-2" />
-                  <div className="grid grid-cols-3 gap-2">
+                  <Input placeholder="Street address" style={{ marginBottom: 8 }} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
                     <Input placeholder="City" />
                     <Input placeholder="State" />
                     <Input placeholder="Pincode" />
@@ -98,11 +124,22 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
 
             {/* License Terms */}
             <Card>
-              <h3 className="text-sm font-bold text-text mb-3 flex items-center gap-2">
-                <DocumentTextIcon className="w-5 h-5" />
+              <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <DocumentTextIcon style={{ width: 20, height: 20 }} />
                 License Agreement
               </h3>
-              <div className="bg-background border border-border rounded p-4 max-h-48 overflow-y-auto text-sm text-text-mid leading-relaxed mb-3">
+              <div style={{
+                background: T.bg,
+                border: `1px solid ${T.border}`,
+                borderRadius: 6,
+                padding: 16,
+                maxHeight: 192,
+                overflowY: 'auto',
+                fontSize: 14,
+                color: T.textMid,
+                lineHeight: 1.5,
+                marginBottom: 12
+              }}>
                 <p className="mb-2">
                   <strong>DataUnion Standard License Agreement</strong>
                 </p>
@@ -128,14 +165,14 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
                 </p>
               </div>
 
-              <label className="flex items-start gap-2 cursor-pointer">
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: 8, cursor: 'pointer' }}>
                 <input
                   type="checkbox"
                   checked={agreed}
                   onChange={(e) => setAgreed(e.target.checked)}
-                  className="mt-1"
+                  style={{ marginTop: 4 }}
                 />
-                <span className="text-sm text-text-mid">
+                <span style={{ fontSize: 14, color: T.textMid }}>
                   I agree to the license terms and DataUnion's Terms of Service
                 </span>
               </label>
@@ -143,19 +180,25 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
 
             {/* Payment */}
             <Card>
-              <h3 className="text-sm font-bold text-text mb-3 flex items-center gap-2">
-                <ShieldCheckIcon className="w-5 h-5" />
+              <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <ShieldCheckIcon style={{ width: 20, height: 20 }} />
                 Payment Method
               </h3>
-              <div className="bg-info-dim border border-info-border rounded p-3 mb-3">
-                <p className="text-xs text-info">
+              <div style={{
+                background: T.primaryLight,
+                border: `1px solid ${T.primary}`,
+                borderRadius: 6,
+                padding: 12,
+                marginBottom: 12
+              }}>
+                <p style={{ fontSize: 12, color: T.primary }}>
                   Payment processed securely via Razorpay. We accept UPI, cards, net banking, and wallets.
                 </p>
               </div>
               <Button
                 onClick={handlePayment}
                 disabled={!agreed}
-                className="w-full"
+                style={{ width: '100%' }}
               >
                 Pay ₹{total.toLocaleString()} →
               </Button>
@@ -163,66 +206,67 @@ export function Checkout({ dataset, tierId, onBack, onComplete }: CheckoutProps)
           </div>
 
           {/* Right - Order Summary */}
-          <div className="lg:col-span-1">
-            <Card className="sticky top-4">
-              <h3 className="text-sm font-bold text-text mb-3">Order Summary</h3>
+          <div>
+            <Card style={{ position: 'sticky', top: 16 }}>
+              <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>Order Summary</h3>
 
-              <div className="mb-3">
-                <div className="text-base font-bold text-text mb-1">{dataset.name}</div>
-                <div className="text-sm text-text-dim">
+              <div style={{ marginBottom: 12 }}>
+                <div style={{ fontSize: 16, fontWeight: 'bold', color: T.text, marginBottom: 4 }}>{dataset.name}</div>
+                <div style={{ fontSize: 14, color: T.textDim }}>
                   {dataset.samples.toLocaleString()} samples • {dataset.size}
                 </div>
               </div>
 
               <Divider />
 
-              <div className="space-y-2 text-xs mb-3">
-                <div className="flex justify-between">
-                  <span className="text-text-dim">License Duration</span>
-                  <span className="text-text font-semibold">{tier.duration} days</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 12, marginBottom: 12 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: T.textDim }}>License Duration</span>
+                  <span style={{ color: T.text, fontWeight: 600 }}>{tier.duration} days</span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-text-dim">Base Price</span>
-                  <span className="text-text">₹{tier.price.toLocaleString()}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: T.textDim }}>Base Price</span>
+                  <span style={{ color: T.text }}>₹{tier.price.toLocaleString()}</span>
                 </div>
                 {tier.discount && (
-                  <div className="flex justify-between text-success">
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: T.green }}>
                     <span>Discount ({tier.discount}%)</span>
                     <span>-₹{((dataset.pricing!.base * (tier.duration / 30) - tier.price)).toLocaleString()}</span>
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <span className="text-text-dim">GST (18%)</span>
-                  <span className="text-text">₹{tax.toLocaleString()}</span>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: T.textDim }}>GST (18%)</span>
+                  <span style={{ color: T.text }}>₹{tax.toLocaleString()}</span>
                 </div>
               </div>
 
               <Divider />
 
-              <div className="flex justify-between text-sm font-bold mb-4">
-                <span className="text-text">Total</span>
-                <span className="text-success font-mono">₹{total.toLocaleString()}</span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 14, fontWeight: 'bold', marginBottom: 16 }}>
+                <span style={{ color: T.text }}>Total</span>
+                <span style={{ color: T.green, fontFamily: MONO }}>₹{total.toLocaleString()}</span>
               </div>
 
-              <div className="space-y-2 text-sm text-text-dim">
-                <div className="flex items-center gap-1">
-                  <CheckIcon className="w-4 h-4 text-success" />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 14, color: T.textDim }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <CheckIcon style={{ width: 16, height: 16, color: T.green }} />
                   <span>Instant download access</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <CheckIcon className="w-4 h-4 text-success" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <CheckIcon style={{ width: 16, height: 16, color: T.green }} />
                   <span>API key included</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <CheckIcon className="w-4 h-4 text-success" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <CheckIcon style={{ width: 16, height: 16, color: T.green }} />
                   <span>Technical support</span>
                 </div>
-                <div className="flex items-center gap-1">
-                  <CheckIcon className="w-4 h-4 text-success" />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                  <CheckIcon style={{ width: 16, height: 16, color: T.green }} />
                   <span>Invoice & certificate</span>
                 </div>
               </div>
             </Card>
+          </div>
           </div>
         </div>
       </div>

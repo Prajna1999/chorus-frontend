@@ -5,6 +5,7 @@ import { Card } from '@/app/components/ui/Card';
 import { Badge } from '@/app/components/ui/Badge';
 import { Button } from '@/app/components/ui/Button';
 import { Pill } from '@/app/components/ui/Pill';
+import { T, SANS, MONO } from '@/lib/theme';
 import { DATA_TYPES } from '@/constants/dataTypes';
 import { MOCK_DATASETS } from '@/constants/marketplaceData';
 import {
@@ -42,47 +43,92 @@ export function MarketplaceBrowse({ onSelectDataset, onGoToPortal, onBackToLandi
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div style={{ minHeight: '100vh', background: T.bg }}>
       {/* Header */}
-      <nav className="px-7 py-4 flex justify-between items-center border-b border-border shadow-sm bg-surface">
-        <button onClick={onBackToLanding} className="flex items-center gap-2 hover:opacity-75 transition-opacity">
-          <div className="w-2 h-2 rounded-full bg-success shadow-sm" />
-          <span className="text-base font-bold font-mono tracking-wide">CHORUS</span>
-          <Badge color="info" className="ml-2">MARKETPLACE</Badge>
+      <nav style={{
+        padding: '16px 28px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: `1px solid ${T.border}`,
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        background: T.surface
+      }}>
+        <button onClick={onBackToLanding} style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          background: 'none',
+          border: 'none',
+          cursor: 'pointer',
+          transition: 'opacity 0.15s',
+          opacity: 1
+        }}
+        onMouseEnter={e => e.currentTarget.style.opacity = '0.75'}
+        onMouseLeave={e => e.currentTarget.style.opacity = '1'}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }} />
+          <span style={{ fontSize: 16, fontWeight: 'bold', fontFamily: MONO, letterSpacing: '0.05em' }}>CHORUS</span>
+          <span style={{ marginLeft: 8 }}>
+            <Badge color="info">MARKETPLACE</Badge>
+          </span>
         </button>
         <Button variant="ghost" onClick={onGoToPortal}>
           Buyer Portal →
         </Button>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div style={{ maxWidth: 1152, margin: '0 auto', padding: '32px 24px' }}>
         {/* Hero */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-text mb-3">
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <h1 style={{ fontSize: 36, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>
             Verified Training Datasets
           </h1>
-          <p className="text-text-mid text-lg max-w-2xl mx-auto">
-            Browse high-quality datasets from verified unions and independent contributors.
-            Transparent pricing and licensing.
+          <p style={{ color: T.textMid, fontSize: 18, maxWidth: 672, margin: '0 auto' }}>
+            Browse quality datasets from unions and independent contributors.
+            Clear pricing and licensing options.
           </p>
         </div>
 
         {/* Search & Filters */}
-        <div className="mb-6 space-y-3">
-          <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-text-dim" />
+        <div style={{ marginBottom: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div style={{ position: 'relative' }}>
+            <MagnifyingGlassIcon style={{
+              position: 'absolute',
+              left: 12,
+              top: '50%',
+              transform: 'translateY(-50%)',
+              width: 20,
+              height: 20,
+              color: T.textDim
+            }} />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search datasets..."
-              className="w-full pl-11 pr-4 py-3 bg-surface border border-border rounded-lg text-base text-text focus:outline-none focus:border-success transition-colors"
+              style={{
+                width: '100%',
+                paddingLeft: 44,
+                paddingRight: 16,
+                paddingTop: 12,
+                paddingBottom: 12,
+                background: T.surface,
+                border: `1px solid ${T.border}`,
+                borderRadius: 8,
+                fontSize: 16,
+                color: T.text,
+                fontFamily: SANS,
+                outline: 'none',
+                transition: 'border-color 0.15s'
+              }}
+              onFocus={(e) => e.currentTarget.style.borderColor = T.green}
+              onBlur={(e) => e.currentTarget.style.borderColor = T.border}
             />
           </div>
 
-          <div className="flex gap-2 items-center flex-wrap">
-            <FunnelIcon className="w-5 h-5 text-text-dim" />
-            <span className="text-sm text-text-dim font-mono font-semibold">FILTERS:</span>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
+            <FunnelIcon style={{ width: 20, height: 20, color: T.textDim }} />
+            <span style={{ fontSize: 14, color: T.textDim, fontFamily: MONO, fontWeight: 600 }}>FILTERS:</span>
 
             {/* Type filter */}
             <Pill active={typeFilter === 'all'} onClick={() => setTypeFilter('all')} color="success">
@@ -102,7 +148,7 @@ export function MarketplaceBrowse({ onSelectDataset, onGoToPortal, onBackToLandi
               );
             })}
 
-            <span className="text-sm text-text-dim mx-2 font-bold">•</span>
+            <span style={{ fontSize: 14, color: T.textDim, margin: '0 8px', fontWeight: 'bold' }}>•</span>
 
             {/* Pricing model filter */}
             <Pill active={pricingFilter === 'all'} onClick={() => setPricingFilter('all')} color="info">
@@ -118,33 +164,46 @@ export function MarketplaceBrowse({ onSelectDataset, onGoToPortal, onBackToLandi
         </div>
 
         {/* Results count */}
-        <div className="text-sm text-text-dim font-mono font-semibold mb-4">
+        <div style={{ fontSize: 14, color: T.textDim, fontFamily: MONO, fontWeight: 600, marginBottom: 16 }}>
           {filtered.length} DATASETS FOUND
         </div>
 
         {/* Dataset Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+          gap: 16
+        }}>
           {filtered.map((dataset) => {
             const Icon = DATA_TYPES.find(dt => dt.id === dataset.type)?.icon;
             const qualityColor = dataset.quality === 'verified' ? 'success' : 'info';
 
             return (
               <Card key={dataset.id} hover className="p-5">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex items-center gap-2">
-                    {Icon && <Icon className="w-6 h-6 text-text-mid" />}
-                    <h3 className="font-bold text-lg text-text">{dataset.name}</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    {Icon && <Icon style={{ width: 24, height: 24, color: T.textMid }} />}
+                    <h3 style={{ fontWeight: 'bold', fontSize: 18, color: T.text }}>{dataset.name}</h3>
                   </div>
                   <Badge color={qualityColor}>
                     {dataset.quality}
                   </Badge>
                 </div>
 
-                <p className="text-sm text-text-mid leading-relaxed mb-3 line-clamp-2">
+                <p style={{
+                  fontSize: 14,
+                  color: T.textMid,
+                  lineHeight: 1.5,
+                  marginBottom: 12,
+                  display: '-webkit-box',
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden'
+                }}>
                   {dataset.description}
                 </p>
 
-                <div className="flex gap-3 mb-3 text-sm text-text-dim font-mono">
+                <div style={{ display: 'flex', gap: 12, marginBottom: 12, fontSize: 14, color: T.textDim, fontFamily: MONO }}>
                   <span>{dataset.samples.toLocaleString()} samples</span>
                   <span>•</span>
                   <span>{dataset.contributors} contributors</span>
@@ -152,17 +211,23 @@ export function MarketplaceBrowse({ onSelectDataset, onGoToPortal, onBackToLandi
                   <span>{dataset.size}</span>
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-text-dim font-mono">
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingTop: 12,
+                  borderTop: `1px solid ${T.border}`
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <span style={{ fontSize: 14, color: T.textDim, fontFamily: MONO }}>
                       {dataset.seller.name}
                     </span>
-                    <span className="text-base">⭐ {dataset.seller.rating}</span>
+                    <span style={{ fontSize: 16 }}>⭐ {dataset.seller.rating}</span>
                   </div>
 
                   {dataset.pricingModel === 'public' && dataset.pricing ? (
-                    <div className="flex items-center gap-3">
-                      <span className="text-sm font-bold text-success font-mono">
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ fontSize: 14, fontWeight: 'bold', color: T.green, fontFamily: MONO }}>
                         ₹{(dataset.pricing.base / 1000).toFixed(0)}K
                       </span>
                       <Button onClick={() => onSelectDataset(dataset)}>
@@ -181,8 +246,8 @@ export function MarketplaceBrowse({ onSelectDataset, onGoToPortal, onBackToLandi
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-text-dim text-lg">No datasets match your filters</p>
+          <div style={{ textAlign: 'center', padding: '64px 0' }}>
+            <p style={{ color: T.textDim, fontSize: 18 }}>No datasets match your filters</p>
           </div>
         )}
       </div>

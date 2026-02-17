@@ -7,6 +7,7 @@ import { Input } from '@/app/components/ui/Input';
 import { Textarea } from '@/app/components/ui/Textarea';
 import { Label } from '@/app/components/ui/Label';
 import { Badge } from '@/app/components/ui/Badge';
+import { T, SANS, MONO } from '@/lib/theme';
 import { ArrowLeftIcon, CheckIcon } from '@heroicons/react/24/outline';
 import type { Dataset } from '@/types/marketplace';
 
@@ -37,35 +38,54 @@ export function RequestQuote({ dataset, onBack, onSubmit }: RequestQuoteProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div style={{ minHeight: '100vh', background: T.bg }}>
       {/* Header */}
-      <nav className="px-7 py-4 flex justify-between items-center border-b border-border shadow-sm bg-surface">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-text-dim hover:text-text transition-colors">
-            <ArrowLeftIcon className="w-5 h-5" />
+      <nav style={{
+        padding: '16px 28px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: `1px solid ${T.border}`,
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        background: T.surface
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={onBack} style={{
+            color: T.textDim,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'color 0.15s',
+            padding: 0
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = T.text}
+          onMouseLeave={e => e.currentTarget.style.color = T.textDim}>
+            <ArrowLeftIcon style={{ width: 20, height: 20 }} />
           </button>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-success shadow-sm" />
-            <span className="text-sm font-bold font-mono tracking-wide">CHORUS</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }} />
+            <span style={{ fontSize: 14, fontWeight: 'bold', fontFamily: MONO, letterSpacing: '0.05em' }}>CHORUS</span>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-3xl mx-auto px-6 py-8">
-        <div className="mb-6">
-          <Badge color="warning" className="mb-3">REQUEST QUOTE</Badge>
-          <h1 className="text-2xl font-bold text-text mb-2">Request Custom Quote</h1>
-          <p className="text-sm text-text-mid">
-            Submit your requirements for <span className="font-semibold text-text">{dataset.name}</span> and
+      <div style={{ maxWidth: 768, margin: '0 auto', padding: '32px 24px' }}>
+        <div style={{ marginBottom: 24 }}>
+          <div style={{ marginBottom: 12 }}>
+            <Badge color="warning">REQUEST QUOTE</Badge>
+          </div>
+          <h1 style={{ fontSize: 24, fontWeight: 'bold', color: T.text, marginBottom: 8 }}>Request Custom Quote</h1>
+          <p style={{ fontSize: 14, color: T.textMid }}>
+            Submit your requirements for <span style={{ fontWeight: 600, color: T.text }}>{dataset.name}</span> and
             the seller will respond with a tailored quote.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
           {/* Company Info */}
           <Card>
-            <h3 className="text-sm font-bold text-text mb-3">Company Information</h3>
-            <div className="space-y-3">
+            <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>Company Information</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div>
                 <Label>Company Name *</Label>
                 <Input
@@ -76,7 +96,7 @@ export function RequestQuote({ dataset, onBack, onSubmit }: RequestQuoteProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>
                   <Label>Contact Name *</Label>
                   <Input
@@ -111,8 +131,8 @@ export function RequestQuote({ dataset, onBack, onSubmit }: RequestQuoteProps) {
 
           {/* Project Details */}
           <Card>
-            <h3 className="text-sm font-bold text-text mb-3">Project Details</h3>
-            <div className="space-y-3">
+            <h3 style={{ fontSize: 14, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>Project Details</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <div>
                 <Label>Use Case *</Label>
                 <Textarea
@@ -124,7 +144,7 @@ export function RequestQuote({ dataset, onBack, onSubmit }: RequestQuoteProps) {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
                 <div>
                   <Label>Estimated Volume</Label>
                   <Input
@@ -166,37 +186,37 @@ export function RequestQuote({ dataset, onBack, onSubmit }: RequestQuoteProps) {
           </Card>
 
           {/* What Happens Next */}
-          <Card className="bg-info-dim border-info-border">
-            <h3 className="text-sm font-semibold text-info mb-3 flex items-center gap-2">
-              <CheckIcon className="w-5 h-5" />
+          <Card style={{ background: T.primaryLight, borderColor: T.primary }}>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: T.primary, marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <CheckIcon style={{ width: 20, height: 20 }} />
               What Happens Next
             </h3>
-            <div className="space-y-2 text-xs text-info">
-              <div className="flex gap-2">
-                <span className="font-mono">1.</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8, fontSize: 12, color: T.primary }}>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <span style={{ fontFamily: MONO }}>1.</span>
                 <span>Your request is sent to {dataset.seller.name}</span>
               </div>
-              <div className="flex gap-2">
-                <span className="font-mono">2.</span>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <span style={{ fontFamily: MONO }}>2.</span>
                 <span>Seller reviews and prepares a custom quote (2 business days)</span>
               </div>
-              <div className="flex gap-2">
-                <span className="font-mono">3.</span>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <span style={{ fontFamily: MONO }}>3.</span>
                 <span>You receive the quote via email and in your buyer portal</span>
               </div>
-              <div className="flex gap-2">
-                <span className="font-mono">4.</span>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <span style={{ fontFamily: MONO }}>4.</span>
                 <span>Accept the quote to proceed with payment and access</span>
               </div>
             </div>
           </Card>
 
           {/* Submit */}
-          <div className="flex gap-3">
+          <div style={{ display: 'flex', gap: 12 }}>
             <Button type="button" variant="ghost" onClick={onBack}>
               Cancel
             </Button>
-            <Button type="submit" className="flex-1">
+            <Button type="submit" style={{ flex: 1 }}>
               Submit Request →
             </Button>
           </div>

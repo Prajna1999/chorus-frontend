@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Card } from '@/app/components/ui/Card';
 import { Badge } from '@/app/components/ui/Badge';
 import { Button } from '@/app/components/ui/Button';
+import { T, SANS, MONO } from '@/lib/theme';
 import { MOCK_LICENSES, MOCK_REQUESTS, MOCK_DATASETS } from '@/constants/marketplaceData';
 import { ApiKeyModal } from './modals/ApiKeyModal';
 import { DownloadModal } from './modals/DownloadModal';
@@ -37,50 +38,93 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div style={{ minHeight: '100vh', background: T.bg }}>
       {/* Header */}
-      <nav className="px-7 py-4 flex justify-between items-center border-b border-border shadow-sm bg-gradient-to-r from-info/5 to-success/5">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-success shadow-sm" />
+      <nav style={{
+        padding: '16px 28px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: `1px solid ${T.border}`,
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        background: `linear-gradient(to right, ${T.primaryLight}, ${T.greenLight})`
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }} />
           <button
             onClick={onBack}
-            className="text-sm font-bold font-mono tracking-wide hover:text-success transition-colors cursor-pointer"
+            style={{
+              fontSize: 14,
+              fontWeight: 'bold',
+              fontFamily: MONO,
+              letterSpacing: '0.05em',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'color 0.15s',
+              color: T.text,
+              padding: 0
+            }}
+            onMouseEnter={e => e.currentTarget.style.color = T.green}
+            onMouseLeave={e => e.currentTarget.style.color = T.text}
           >
             CHORUS
           </button>
-          <Badge color="info" className="ml-2">BUYER PORTAL</Badge>
+          <span style={{ marginLeft: 8 }}>
+            <Badge color="info">BUYER PORTAL</Badge>
+          </span>
         </div>
-        <Button variant="ghost" onClick={onBack} className="text-xs">
+        <Button variant="ghost" onClick={onBack} style={{ fontSize: 12 }}>
           ← Back to Marketplace
         </Button>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div style={{ maxWidth: 1152, margin: '0 auto', padding: '32px 24px' }}>
         {/* Welcome */}
-        <div className="mb-6">
-          <h1 className="text-4xl font-bold text-text mb-2">Welcome, Acme AI Labs</h1>
-          <p className="text-sm text-text-mid">Manage your licenses and dataset requests</p>
+        <div style={{ marginBottom: 24 }}>
+          <h1 style={{ fontSize: 36, fontWeight: 'bold', color: T.text, marginBottom: 8 }}>Welcome, Acme AI Labs</h1>
+          <p style={{ fontSize: 14, color: T.textMid }}>Manage your licenses and dataset requests</p>
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-border mb-6">
+        <div style={{ display: 'flex', gap: 8, borderBottom: `1px solid ${T.border}`, marginBottom: 24 }}>
           <button
             onClick={() => setTab('licenses')}
-            className={`px-5 py-3 text-lg font-bold font-mono transition-all border-b-2 ${
-              tab === 'licenses'
-                ? 'border-success text-text'
-                : 'border-transparent text-text-dim hover:text-text-mid'
-            }`}
+            style={{
+              padding: '12px 20px',
+              fontSize: 18,
+              fontWeight: 'bold',
+              fontFamily: MONO,
+              transition: 'all 0.15s',
+              borderBottom: tab === 'licenses' ? `2px solid ${T.green}` : '2px solid transparent',
+              color: tab === 'licenses' ? T.text : T.textDim,
+              background: 'none',
+              border: 'none',
+              borderBottom: tab === 'licenses' ? `2px solid ${T.green}` : '2px solid transparent',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={e => { if (tab !== 'licenses') e.currentTarget.style.color = T.textMid; }}
+            onMouseLeave={e => { if (tab !== 'licenses') e.currentTarget.style.color = T.textDim; }}
           >
             MY LICENSES ({MOCK_LICENSES.length})
           </button>
           <button
             onClick={() => setTab('requests')}
-            className={`px-5 py-3 text-lg font-bold font-mono transition-all border-b-2 ${
-              tab === 'requests'
-                ? 'border-success text-text'
-                : 'border-transparent text-text-dim hover:text-text-mid'
-            }`}
+            style={{
+              padding: '12px 20px',
+              fontSize: 18,
+              fontWeight: 'bold',
+              fontFamily: MONO,
+              transition: 'all 0.15s',
+              borderBottom: tab === 'requests' ? `2px solid ${T.green}` : '2px solid transparent',
+              color: tab === 'requests' ? T.text : T.textDim,
+              background: 'none',
+              border: 'none',
+              borderBottom: tab === 'requests' ? `2px solid ${T.green}` : '2px solid transparent',
+              cursor: 'pointer'
+            }}
+            onMouseEnter={e => { if (tab !== 'requests') e.currentTarget.style.color = T.textMid; }}
+            onMouseLeave={e => { if (tab !== 'requests') e.currentTarget.style.color = T.textDim; }}
           >
             REQUESTS ({MOCK_REQUESTS.length})
           </button>
@@ -88,10 +132,10 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
 
         {/* Licenses Tab */}
         {tab === 'licenses' && (
-          <div className="space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {MOCK_LICENSES.length === 0 ? (
-              <Card className="text-center py-16">
-                <p className="text-text-dim text-lg mb-4">No licenses yet</p>
+              <Card className="p-6" style={{ textAlign: 'center', padding: '64px 0' }}>
+                <p style={{ color: T.textDim, fontSize: 18, marginBottom: 16 }}>No licenses yet</p>
                 <Button variant="subtle" onClick={onBack}>
                   Browse Datasets
                 </Button>
@@ -108,15 +152,15 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
 
                 return (
                   <Card key={license.id} className="p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-bold text-xl text-text">{dataset.name}</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                          <h3 style={{ fontWeight: 'bold', fontSize: 20, color: T.text }}>{dataset.name}</h3>
                           <Badge color={isExpired ? 'danger' : 'success'}>
                             {isExpired ? 'Expired' : 'Active'}
                           </Badge>
                         </div>
-                        <div className="text-sm text-text-dim font-mono space-x-3">
+                        <div style={{ fontSize: 14, color: T.textDim, fontFamily: MONO, display: 'flex', gap: 12 }}>
                           <span>License ID: {license.id}</span>
                           <span>•</span>
                           <span>{license.duration} days</span>
@@ -124,72 +168,76 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
                           <span>Expires: {new Date(license.expiryDate).toLocaleDateString()}</span>
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-base font-bold text-success font-mono">
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: 16, fontWeight: 'bold', color: T.green, fontFamily: MONO }}>
                           ₹{license.price.toLocaleString()}
                         </div>
-                        <div className="text-sm text-text-dim">{license.type}</div>
+                        <div style={{ fontSize: 14, color: T.textDim }}>{license.type}</div>
                       </div>
                     </div>
 
                     {!isExpired && (
                       <>
-                        <div className="flex items-center gap-2 mb-3 text-base">
-                          <ClockIcon className="w-5 h-5 text-warning" />
-                          <span className="text-text-mid font-semibold">
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, fontSize: 16 }}>
+                          <ClockIcon style={{ width: 20, height: 20, color: T.amber }} />
+                          <span style={{ color: T.textMid, fontWeight: 600 }}>
                             {daysLeft} days remaining
                           </span>
-                          <div className="flex-1 bg-border rounded-full h-2 overflow-hidden">
+                          <div style={{ flex: 1, background: T.border, borderRadius: 9999, height: 8, overflow: 'hidden' }}>
                             <div
-                              className="bg-success h-full transition-all"
-                              style={{ width: `${(daysLeft / license.duration) * 100}%` }}
+                              style={{
+                                background: T.green,
+                                height: '100%',
+                                transition: 'width 0.3s',
+                                width: `${(daysLeft / license.duration) * 100}%`
+                              }}
                             />
                           </div>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div style={{ display: 'flex', gap: 8 }}>
                           <Button
                             onClick={() => setShowDownload(license)}
-                            className="flex-1 text-xs py-2"
+                            style={{ flex: 1, fontSize: 12, padding: '8px 16px' }}
                           >
-                            <ArrowDownTrayIcon className="w-5 h-5 inline mr-1" />
+                            <ArrowDownTrayIcon style={{ width: 20, height: 20, display: 'inline', marginRight: 4 }} />
                             Download Dataset
                           </Button>
                           <Button
                             onClick={() => setShowApiKey(license)}
                             variant="ghost"
-                            className="px-4 text-xs py-2"
+                            style={{ padding: '8px 16px', fontSize: 12 }}
                           >
-                            <KeyIcon className="w-5 h-5 inline mr-1" />
+                            <KeyIcon style={{ width: 20, height: 20, display: 'inline', marginRight: 4 }} />
                             API Key
                           </Button>
                           <Button
                             onClick={() => setShowInvoice(license)}
                             variant="subtle"
-                            className="px-4 text-xs py-2"
+                            style={{ padding: '8px 16px', fontSize: 12 }}
                           >
                             Invoice
                           </Button>
                         </div>
 
-                        <div className="mt-3 pt-3 border-t border-border text-sm text-text-dim">
+                        <div style={{ marginTop: 12, paddingTop: 12, borderTop: `1px solid ${T.border}`, fontSize: 14, color: T.textDim }}>
                           Downloads: {license.downloadCount} • API calls: 1,247
                         </div>
                       </>
                     )}
 
                     {isExpired && (
-                      <div className="flex gap-2">
+                      <div style={{ display: 'flex', gap: 8 }}>
                         <Button
                           onClick={() => setShowInvoice(license)}
                           variant="subtle"
-                          className="flex-1 text-xs"
+                          style={{ flex: 1, fontSize: 12 }}
                         >
                           View Invoice
                         </Button>
                         <Button
                           onClick={() => onRenewLicense(dataset.id)}
-                          className="text-xs"
+                          style={{ fontSize: 12 }}
                         >
                           Renew License
                         </Button>
@@ -204,10 +252,10 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
 
         {/* Requests Tab */}
         {tab === 'requests' && (
-          <div className="space-y-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             {MOCK_REQUESTS.length === 0 ? (
-              <Card className="text-center py-16">
-                <p className="text-text-dim text-lg mb-4">No pending requests</p>
+              <Card className="p-6" style={{ textAlign: 'center', padding: '64px 0' }}>
+                <p style={{ color: T.textDim, fontSize: 18, marginBottom: 16 }}>No pending requests</p>
                 <Button variant="subtle" onClick={onBack}>
                   Browse Request-Based Datasets
                 </Button>
@@ -230,60 +278,67 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
 
                 return (
                   <Card key={request.id} className="p-4">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-bold text-xl text-text">{dataset.name}</h3>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 12 }}>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                          <h3 style={{ fontWeight: 'bold', fontSize: 20, color: T.text }}>{dataset.name}</h3>
                           <Badge color={config.color}>
-                            <StatusIcon className="w-5 h-5 inline mr-1" />
+                            <StatusIcon style={{ width: 20, height: 20, display: 'inline', marginRight: 4 }} />
                             {config.label}
                           </Badge>
                         </div>
-                        <div className="text-sm text-text-dim font-mono">
+                        <div style={{ fontSize: 14, color: T.textDim, fontFamily: MONO }}>
                           Request ID: {request.id} • Submitted: {new Date(request.createdAt).toLocaleDateString()}
                         </div>
                       </div>
                     </div>
 
-                    <div className="bg-background border border-border rounded p-3 mb-3 text-base">
-                      <div className="grid grid-cols-2 gap-2 text-text-mid">
+                    <div style={{
+                      background: T.bg,
+                      border: `1px solid ${T.border}`,
+                      borderRadius: 6,
+                      padding: 12,
+                      marginBottom: 12,
+                      fontSize: 16
+                    }}>
+                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, color: T.textMid }}>
                         <div>
-                          <span className="text-text-dim">Use Case:</span> {request.useCase}
+                          <span style={{ color: T.textDim }}>Use Case:</span> {request.useCase}
                         </div>
                         <div>
-                          <span className="text-text-dim">Timeline:</span> {request.timeline}
+                          <span style={{ color: T.textDim }}>Timeline:</span> {request.timeline}
                         </div>
                       </div>
                     </div>
 
                     {request.quote && (
-                      <Card className="mb-3 bg-success-dim border-success-border p-3">
-                        <div className="flex justify-between items-start mb-2">
+                      <Card className="p-3" style={{ marginBottom: 12, background: T.greenLight, borderColor: T.green }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
                           <div>
-                            <div className="text-base font-bold text-success mb-1">Quote Received</div>
-                            <div className="text-sm text-text-dim">
+                            <div style={{ fontSize: 16, fontWeight: 'bold', color: T.green, marginBottom: 4 }}>Quote Received</div>
+                            <div style={{ fontSize: 14, color: T.textDim }}>
                               Valid until: {new Date(request.quote.validUntil).toLocaleDateString()}
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-2xl font-bold text-success font-mono">
+                          <div style={{ textAlign: 'right' }}>
+                            <div style={{ fontSize: 24, fontWeight: 'bold', color: T.green, fontFamily: MONO }}>
                               ₹{request.quote.price.toLocaleString()}
                             </div>
-                            <div className="text-sm text-text-dim">{request.quote.duration} days</div>
+                            <div style={{ fontSize: 14, color: T.textDim }}>{request.quote.duration} days</div>
                           </div>
                         </div>
-                        <p className="text-sm text-text-mid mb-3">{request.quote.terms}</p>
-                        <div className="flex gap-2">
+                        <p style={{ fontSize: 14, color: T.textMid, marginBottom: 12 }}>{request.quote.terms}</p>
+                        <div style={{ display: 'flex', gap: 8 }}>
                           <Button
                             onClick={() => onAcceptQuote(request)}
-                            className="flex-1 text-xs"
+                            style={{ flex: 1, fontSize: 12 }}
                           >
                             Accept Quote & Pay
                           </Button>
                           <Button
                             onClick={() => setShowNegotiate(request)}
                             variant="ghost"
-                            className="px-4 text-xs"
+                            style={{ padding: '8px 16px', fontSize: 12 }}
                           >
                             Negotiate
                           </Button>
@@ -292,8 +347,8 @@ export function BuyerPortal({ onBack, onRenewLicense, onAcceptQuote }: BuyerPort
                     )}
 
                     {!request.quote && request.status !== 'rejected' && (
-                      <div className="text-sm text-text-dim flex items-center gap-2">
-                        <ClockIcon className="w-5 h-5" />
+                      <div style={{ fontSize: 14, color: T.textDim, display: 'flex', alignItems: 'center', gap: 8 }}>
+                        <ClockIcon style={{ width: 20, height: 20 }} />
                         Waiting for seller response...
                       </div>
                     )}

@@ -5,6 +5,7 @@ import { Card } from '@/app/components/ui/Card';
 import { Badge } from '@/app/components/ui/Badge';
 import { Button } from '@/app/components/ui/Button';
 import { Input } from '@/app/components/ui/Input';
+import { T, SANS, MONO } from '@/lib/theme';
 import { DATA_TYPES } from '@/constants/dataTypes';
 import {
   ArrowLeftIcon,
@@ -99,16 +100,33 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
   const spread = mockMarketData.asks[0]?.price - mockMarketData.bids[0]?.price;
 
   return (
-    <div className="min-h-screen bg-background">
+    <div style={{ minHeight: '100vh', background: T.bg }}>
       {/* Header */}
-      <nav className="px-7 py-4 flex justify-between items-center border-b border-border shadow-sm bg-surface">
-        <div className="flex items-center gap-3">
-          <button onClick={onBack} className="text-text-dim hover:text-text transition-colors">
-            <ArrowLeftIcon className="w-5 h-5" />
+      <nav style={{
+        padding: '16px 28px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: `1px solid ${T.border}`,
+        boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        background: T.surface
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <button onClick={onBack} style={{
+            color: T.textDim,
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            transition: 'color 0.15s',
+            padding: 0
+          }}
+          onMouseEnter={e => e.currentTarget.style.color = T.text}
+          onMouseLeave={e => e.currentTarget.style.color = T.textDim}>
+            <ArrowLeftIcon style={{ width: 20, height: 20 }} />
           </button>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-success shadow-sm" />
-            <span className="text-base font-bold font-mono tracking-wide">CHORUS</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ width: 8, height: 8, borderRadius: '50%', background: T.green, boxShadow: '0 1px 2px 0 rgb(0 0 0 / 0.05)' }} />
+            <span style={{ fontSize: 16, fontWeight: 'bold', fontFamily: MONO, letterSpacing: '0.05em' }}>CHORUS</span>
             <Badge color="info">MARKETPLACE</Badge>
           </div>
         </div>
@@ -117,21 +135,30 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
         </Button>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div style={{ maxWidth: 1152, margin: '0 auto', padding: '32px 24px' }}>
         {/* Dataset Header */}
-        <div className="mb-8">
-          <div className="flex items-start gap-4 mb-4">
+        <div style={{ marginBottom: 32 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16, marginBottom: 16 }}>
             {Icon && (
-              <div className="w-16 h-16 rounded-xl bg-success-dim flex items-center justify-center flex-shrink-0">
-                <Icon className="w-8 h-8 text-success" />
+              <div style={{
+                width: 64,
+                height: 64,
+                borderRadius: 12,
+                background: T.greenLight,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0
+              }}>
+                <Icon style={{ width: 32, height: 32, color: T.green }} />
               </div>
             )}
-            <div className="flex-1">
-              <h1 className="text-4xl font-bold text-text mb-3">{dataset.name}</h1>
-              <p className="text-base text-text-mid leading-relaxed mb-4">
+            <div style={{ flex: 1 }}>
+              <h1 style={{ fontSize: 36, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>{dataset.name}</h1>
+              <p style={{ fontSize: 16, color: T.textMid, lineHeight: 1.5, marginBottom: 16 }}>
                 {dataset.description}
               </p>
-              <div className="flex gap-2 flex-wrap">
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                 {dataset.tags.map((tag) => (
                   <Badge key={tag} color="info">
                     {tag}
@@ -142,29 +169,29 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="p-4 text-center">
-              <div className="text-2xl font-bold text-success mb-1">{dataset.samples.toLocaleString()}</div>
-              <div className="text-xs text-text-dim">Total Samples</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 16 }}>
+            <Card className="p-4" style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 'bold', color: T.green, marginBottom: 4 }}>{dataset.samples.toLocaleString()}</div>
+              <div style={{ fontSize: 12, color: T.textDim }}>Total Samples</div>
             </Card>
-            <Card className="p-4 text-center">
-              <div className="text-2xl font-bold text-info mb-1">{dataset.contributors}</div>
-              <div className="text-xs text-text-dim">Contributors</div>
+            <Card className="p-4" style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 'bold', color: T.primary, marginBottom: 4 }}>{dataset.contributors}</div>
+              <div style={{ fontSize: 12, color: T.textDim }}>Contributors</div>
             </Card>
-            <Card className="p-4 text-center">
-              <div className="text-2xl font-bold text-warning mb-1">{dataset.size}</div>
-              <div className="text-xs text-text-dim">Dataset Size</div>
+            <Card className="p-4" style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 'bold', color: T.amber, marginBottom: 4 }}>{dataset.size}</div>
+              <div style={{ fontSize: 12, color: T.textDim }}>Dataset Size</div>
             </Card>
-            <Card className="p-4 text-center">
-              <div className="text-2xl font-bold text-text mb-1">⭐ {dataset.seller.rating}</div>
-              <div className="text-xs text-text-dim">Seller Rating</div>
+            <Card className="p-4" style={{ textAlign: 'center' }}>
+              <div style={{ fontSize: 24, fontWeight: 'bold', color: T.text, marginBottom: 4 }}>⭐ {dataset.seller.rating}</div>
+              <div style={{ fontSize: 12, color: T.textDim }}>Seller Rating</div>
             </Card>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="border-b border-border mb-6">
-          <div className="flex gap-1">
+        <div style={{ borderBottom: `1px solid ${T.border}`, marginBottom: 24 }}>
+          <div style={{ display: 'flex', gap: 4 }}>
             {[
               { id: 'overview', label: 'Overview' },
               { id: 'samples', label: 'Sample Data' },
@@ -175,11 +202,30 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id as Tab)}
-                className={`px-6 py-3 border-b-2 transition-all text-sm font-semibold ${
-                  activeTab === tab.id
-                    ? 'border-success text-success bg-success-dim/30'
-                    : 'border-transparent text-text-dim hover:text-text hover:bg-surface'
-                }`}
+                style={{
+                  padding: '12px 24px',
+                  borderBottom: activeTab === tab.id ? `2px solid ${T.green}` : '2px solid transparent',
+                  transition: 'all 0.15s',
+                  fontSize: 14,
+                  fontWeight: 600,
+                  color: activeTab === tab.id ? T.green : T.textDim,
+                  background: activeTab === tab.id ? `${T.greenLight}` : 'transparent',
+                  border: 'none',
+                  borderBottom: activeTab === tab.id ? `2px solid ${T.green}` : '2px solid transparent',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== tab.id) {
+                    e.currentTarget.style.color = T.text;
+                    e.currentTarget.style.background = T.surface;
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== tab.id) {
+                    e.currentTarget.style.color = T.textDim;
+                    e.currentTarget.style.background = 'transparent';
+                  }
+                }}
               >
                 {tab.label}
               </button>
@@ -187,15 +233,23 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 24 }}>
+          <style>{`
+            @media (min-width: 1024px) {
+              .dataset-detail-grid {
+                grid-template-columns: 2fr 1fr;
+              }
+            }
+          `}</style>
+          <div className="dataset-detail-grid" style={{ display: 'grid', gap: 24 }}>
           {/* Left Column - Tab Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {/* Overview Tab */}
             {activeTab === 'overview' && (
               <>
                 <Card className="p-6">
-                  <h3 className="text-xl font-bold text-text mb-4">What's Included</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <h3 style={{ fontSize: 20, fontWeight: 'bold', color: T.text, marginBottom: 16 }}>What's Included</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 12 }}>
                     {[
                       'Raw dataset files (JSON/CSV/Audio)',
                       'Metadata and annotations',
@@ -206,8 +260,8 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
                       'License certificate',
                       'Usage analytics dashboard'
                     ].map((item, i) => (
-                      <div key={i} className="flex items-start gap-2 text-sm text-text-mid">
-                        <CheckIcon className="w-5 h-5 text-success flex-shrink-0 mt-0.5" />
+                      <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 8, fontSize: 14, color: T.textMid }}>
+                        <CheckIcon style={{ width: 20, height: 20, color: T.green, flexShrink: 0, marginTop: 2 }} />
                         <span>{item}</span>
                       </div>
                     ))}
@@ -215,27 +269,35 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
                 </Card>
 
                 <Card className="p-6">
-                  <h3 className="text-xl font-bold text-text mb-4">About the Seller</h3>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-success flex items-center justify-center">
-                      <UserGroupIcon className="w-6 h-6 text-white" />
+                  <h3 style={{ fontSize: 20, fontWeight: 'bold', color: T.text, marginBottom: 16 }}>About the Seller</h3>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
+                    <div style={{
+                      width: 48,
+                      height: 48,
+                      borderRadius: 12,
+                      background: T.green,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <UserGroupIcon style={{ width: 24, height: 24, color: 'white' }} />
                     </div>
                     <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-base font-bold text-text">{dataset.seller.name}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                        <span style={{ fontSize: 16, fontWeight: 'bold', color: T.text }}>{dataset.seller.name}</span>
                         {dataset.seller.type === 'union' ? (
                           <Badge color="success">Data Provider</Badge>
                         ) : (
                           <Badge color="info">Independent</Badge>
                         )}
                       </div>
-                      <div className="text-sm text-text-mid">⭐ {dataset.seller.rating}/5.0 • {dataset.contributors} contributors</div>
+                      <div style={{ fontSize: 14, color: T.textMid }}>⭐ {dataset.seller.rating}/5.0 • {dataset.contributors} contributors</div>
                     </div>
                   </div>
-                  <p className="text-sm text-text-mid leading-relaxed">
+                  <p style={{ fontSize: 14, color: T.textMid, lineHeight: 1.5 }}>
                     {dataset.seller.type === 'union'
                       ? 'Professional data provider with verified contributors and quality oversight. All data is reviewed and verified before listing.'
-                      : 'Independent data contributor with verified quality and transparent sourcing.'}
+                      : 'Independent data contributor with verified quality standards.'}
                   </p>
                 </Card>
               </>
@@ -245,26 +307,39 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
             {activeTab === 'samples' && (
               <>
                 <Card className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-text">Sample Preview</h3>
-                    <Button variant="ghost" onClick={handleDownloadSample} className="flex items-center gap-2">
-                      <ArrowDownTrayIcon className="w-5 h-5" />
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+                    <h3 style={{ fontSize: 20, fontWeight: 'bold', color: T.text }}>Sample Preview</h3>
+                    <Button variant="ghost" onClick={handleDownloadSample} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <ArrowDownTrayIcon style={{ width: 20, height: 20 }} />
                       Download Sample Pack
                     </Button>
                   </div>
-                  <p className="text-sm text-text-dim mb-6">
+                  <p style={{ fontSize: 14, color: T.textDim, marginBottom: 24 }}>
                     Preview representative samples from this dataset. Download the full sample pack (10 samples, ~2MB) to evaluate quality.
                   </p>
-                  <div className="space-y-3">
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                     {dataset.samples_preview.map((sample, i) => (
-                      <div key={i} className="bg-background border border-border rounded-lg p-4">
-                        <div className="flex items-center justify-between mb-2">
-                          <div className="text-xs text-text-dim font-mono uppercase">
+                      <div key={i} style={{
+                        background: T.bg,
+                        border: `1px solid ${T.border}`,
+                        borderRadius: 8,
+                        padding: 16
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                          <div style={{ fontSize: 12, color: T.textDim, fontFamily: MONO, textTransform: 'uppercase' }}>
                             Sample #{i + 1} • {sample.type}
                           </div>
                           <Badge color="success">Verified</Badge>
                         </div>
-                        <div className="text-sm text-text font-mono leading-relaxed bg-surface p-3 rounded">
+                        <div style={{
+                          fontSize: 14,
+                          color: T.text,
+                          fontFamily: MONO,
+                          lineHeight: 1.5,
+                          background: T.surface,
+                          padding: 12,
+                          borderRadius: 6
+                        }}>
                           {sample.preview}
                         </div>
                       </div>
@@ -702,24 +777,35 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
           </div>
 
           {/* Right Column - Pricing (Sticky) */}
-          <div className="lg:col-span-1">
+          <div>
             {dataset.pricingModel === 'public' && dataset.pricing ? (
-              <Card className="sticky top-4 p-6">
-                <h3 className="text-lg font-bold text-text mb-4">Select License Tier</h3>
+              <Card className="p-6" style={{ position: 'sticky', top: 16 }}>
+                <h3 style={{ fontSize: 18, fontWeight: 'bold', color: T.text, marginBottom: 16 }}>Select License Tier</h3>
 
-                <div className="space-y-3 mb-6">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
                   {dataset.pricing.tiers.map((tier, i) => (
                     <button
                       key={i}
                       onClick={() => setSelectedTier(i)}
-                      className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
-                        selectedTier === i
-                          ? 'border-success bg-success-dim'
-                          : 'border-border bg-surface hover:border-border-dark'
-                      }`}
+                      style={{
+                        width: '100%',
+                        padding: 16,
+                        borderRadius: 8,
+                        border: selectedTier === i ? `2px solid ${T.green}` : `2px solid ${T.border}`,
+                        background: selectedTier === i ? T.greenLight : T.surface,
+                        transition: 'all 0.15s',
+                        textAlign: 'left',
+                        cursor: 'pointer'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (selectedTier !== i) e.currentTarget.style.borderColor = T.textMid;
+                      }}
+                      onMouseLeave={(e) => {
+                        if (selectedTier !== i) e.currentTarget.style.borderColor = T.border;
+                      }}
                     >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-base font-bold text-text">
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                        <span style={{ fontSize: 16, fontWeight: 'bold', color: T.text }}>
                           {tier.duration} Days
                         </span>
                         {tier.discount && (
@@ -728,12 +814,12 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
                           </Badge>
                         )}
                       </div>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xl font-bold text-success font-mono">
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                        <span style={{ fontSize: 20, fontWeight: 'bold', color: T.green, fontFamily: MONO }}>
                           ₹{(tier.price / 1000).toFixed(0)}K
                         </span>
                         {tier.discount && dataset.pricing && (
-                          <span className="text-sm text-text-dim line-through">
+                          <span style={{ fontSize: 14, color: T.textDim, textDecoration: 'line-through' }}>
                             ₹{(dataset.pricing.base * (tier.duration / 30) / 1000).toFixed(0)}K
                           </span>
                         )}
@@ -744,33 +830,41 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
 
                 <Button
                   onClick={() => onCheckout(dataset.id, selectedTier)}
-                  className="w-full mb-4"
+                  style={{ width: '100%', marginBottom: 16 }}
                 >
                   Proceed to Checkout →
                 </Button>
 
-                <div className="text-xs text-text-dim space-y-2 pt-4 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <ClockIcon className="w-4 h-4" />
+                <div style={{
+                  fontSize: 12,
+                  color: T.textDim,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                  paddingTop: 16,
+                  borderTop: `1px solid ${T.border}`
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <ClockIcon style={{ width: 16, height: 16 }} />
                     <span>Instant access after payment</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckIcon className="w-4 h-4" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <CheckIcon style={{ width: 16, height: 16 }} />
                     <span>Secure payment via Razorpay</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheckIcon className="w-4 h-4" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <ShieldCheckIcon style={{ width: 16, height: 16 }} />
                     <span>Legal compliance guaranteed</span>
                   </div>
                 </div>
               </Card>
             ) : (
-              <Card className="sticky top-4 p-6">
-                <Badge color="warning" className="mb-4">
-                  Custom Pricing
-                </Badge>
-                <h3 className="text-lg font-bold text-text mb-3">Request Quote</h3>
-                <p className="text-sm text-text-mid mb-6 leading-relaxed">
+              <Card className="p-6" style={{ position: 'sticky', top: 16 }}>
+                <div style={{ marginBottom: 16 }}>
+                  <Badge color="warning">Custom Pricing</Badge>
+                </div>
+                <h3 style={{ fontSize: 18, fontWeight: 'bold', color: T.text, marginBottom: 12 }}>Request Quote</h3>
+                <p style={{ fontSize: 14, color: T.textMid, marginBottom: 24, lineHeight: 1.5 }}>
                   This dataset uses custom pricing. Submit a request with your use case and requirements
                   to receive a tailored quote.
                 </p>
@@ -778,23 +872,32 @@ export function DatasetDetail({ dataset, onBack, onCheckout, onRequestQuote, onG
                 <Button
                   onClick={() => onRequestQuote(dataset.id)}
                   variant="subtle"
-                  className="w-full mb-4"
+                  style={{ width: '100%', marginBottom: 16 }}
                 >
                   Request Custom Quote →
                 </Button>
 
-                <div className="text-xs text-text-dim space-y-2 pt-4 border-t border-border">
-                  <div className="flex items-center gap-2">
-                    <ClockIcon className="w-4 h-4" />
+                <div style={{
+                  fontSize: 12,
+                  color: T.textDim,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: 8,
+                  paddingTop: 16,
+                  borderTop: `1px solid ${T.border}`
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <ClockIcon style={{ width: 16, height: 16 }} />
                     <span>Response within 2 business days</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <CheckIcon className="w-4 h-4" />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <CheckIcon style={{ width: 16, height: 16 }} />
                     <span>Flexible terms and pricing</span>
                   </div>
                 </div>
               </Card>
             )}
+          </div>
           </div>
         </div>
       </div>
